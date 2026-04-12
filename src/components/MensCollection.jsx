@@ -39,7 +39,6 @@ const Menscollection = () => {
                 Add to Cart
               </button>
 
-             
               {itemInCart && (
                 <p style={{ marginTop: "8px", fontWeight: "bold" }}>
                   Qty: {itemInCart.qty}

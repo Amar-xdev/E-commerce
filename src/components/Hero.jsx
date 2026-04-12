@@ -1,7 +1,7 @@
 import React from 'react'
 import HeroMen from './HeroMen'
 import HeroWomen from './HeroWomen'
-import Offers from './Offiers'
+import Offers from './Offers'
 
 const Hero = () => {
   return (

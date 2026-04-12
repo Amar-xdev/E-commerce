@@ -31,15 +31,13 @@ function App() {
 
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PlaceOrder />} />
-        
-         </Routes>
+
+          </Routes>
 
         </BrowserRouter>
 
         <Footer />
       </CartProvider>
-
-
     </>
   )
 }

@@ -86,7 +86,7 @@ const LoginSignup = () => {
           {!isLogin && (
             <>
               <input 
-                type='text' 
+                type='text'
                 name="name"
                 placeholder='Your Name'
                 value={formData.name}
@@ -105,7 +105,7 @@ const LoginSignup = () => {
           />
           {errors.email && <p className="error">{errors.email}</p>}
 
-          <input 
+          <input
             type='password' 
             name="password"
             placeholder='Password'
@@ -147,4 +147,4 @@ const LoginSignup = () => {
   )
 }
 
-export default LoginSignup
+export default LoginSignup;

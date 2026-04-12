@@ -33,17 +33,17 @@ const PlaceOrder = () => {
       return;
     }
 
-    alert("Order Placed Successfully ");
+    alert("Order Placed Successfully");
 
-    clearCart();        
-    navigate("/");      
+    clearCart(); 
+    navigate("/");
   };
 
   return (
     <div className="checkout">
       <div className="checkout-container">
 
-        <h1>Checkout</h1>
+        <h1>My Address</h1>
 
         <form onSubmit={handleSubmit} className="checkout-form">
 

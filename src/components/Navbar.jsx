@@ -39,7 +39,7 @@ const Navbar = () => {
       </div>
 
       <NavLink to="/login">
-        <button>Login</button>
+        <button>Sign up</button>
       </NavLink>
 
       
@@ -48,7 +48,7 @@ const Navbar = () => {
         className={({ isActive }) => isActive ? "active" : ""}
         style={{ position: "relative", marginLeft: "20px" }}
       >
-        🛒
+         <img src="https://images.unsplash.com/photo-1638428355339-3ae4ae63bf4e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
         {totalItems > 0 && (
           <span style={{
             position: "absolute",
