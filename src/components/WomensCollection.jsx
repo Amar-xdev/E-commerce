@@ -12,16 +12,27 @@ const Womenscollection = () => {
   }, [addToCartContext]);
 
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0); 
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false)
 
   const limit = 10;
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://dummyjson.com/products?limit=${limit}&skip=${page * limit}`
-      );
-      setProducts(res.data.products);
+      try {
+        setLoading(true)
+
+        const res = await axios.get(
+          `https://dummyjson.com/products?limit=${limit}&skip=${page * limit}`
+        );
+        setProducts(res.data.products);
+      }
+
+      catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -29,37 +40,42 @@ const Womenscollection = () => {
 
   return (
     <div className="women">
-      <h1>Men's Collection</h1>
+      <h1>Women's Collection</h1>
 
-      <div className="grid">
-        {products.map((p) => {
+      {loading ? (
+        <h2 className="loader" style={{ textAlign: "center" }}>Loading please wait...</h2>
+      ) : (
 
-          const itemInCart = cart.find(item => item.id === p.id);
 
-          return (
-            <div className="card" key={p.id}>
-              <img src={p.thumbnail} alt={p.title} />
-              <h3>{p.title}</h3>
-              <p className="price">₹{p.price}</p>
+        <div className="grid">
+          {products.map((p) => {
 
-              <button onClick={() => handleAddToCart(p)}>
-                Add to Cart
-              </button>
+            const itemInCart = cart.find(item => item.id === p.id);
 
-              {itemInCart && (
-                <p style={{ marginTop: "8px", fontWeight: "bold" }}>
-                  Qty: {itemInCart.qty}
-                </p>
-              )}
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div className="card" key={p.id}>
+                <img src={p.thumbnail} alt={p.title} />
+                <h3>{p.title}</h3>
+                <p className="price">₹{p.price}</p>
 
-      
+                <button onClick={() => handleAddToCart(p)}>
+                  Add to Cart
+                </button>
+
+                {itemInCart && (
+                  <p style={{ marginTop: "8px", fontWeight: "bold" }}>
+                    Qty: {itemInCart.qty}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )};
+
       <div style={{ marginTop: "20px", textAlign: "center" }}>
-        
-        <button 
+
+        <button
           onClick={() => setPage(prev => prev - 1)}
           disabled={page === 0}
           style={{ marginRight: "10px" }}
@@ -69,7 +85,7 @@ const Womenscollection = () => {
 
         <span>Page {page + 1}</span>
 
-        <button 
+        <button
           onClick={() => setPage(prev => prev + 1)}
           style={{ marginLeft: "10px" }}
         >

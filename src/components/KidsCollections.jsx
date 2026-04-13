@@ -6,89 +6,102 @@ import { CartContext } from "./CartContex";
 
 const KidsCollections = () => {
 
-  const { cart, addToCart: addToCartContext } = useContext(CartContext);
+    const { cart, addToCart: addToCartContext } = useContext(CartContext);
 
-  const handleAddToCart = useCallback((product) => {
-    addToCartContext(product);
-  }, [addToCartContext]);
+    const handleAddToCart = useCallback((product) => {
+        addToCartContext(product);
+    }, [addToCartContext]);
 
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0); 
+    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(false)
 
-  const limit = 10;
+    const limit = 10;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `https://69dcc95084f912a264042db9.mockapi.io/products`
-        );
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
 
-        
-        const start = page * limit;
-        const end = start + limit;
+                const res = await axios.get(
+                    "https://69dcc95084f912a264042db9.mockapi.io/products"
+                );
 
-        setProducts(res.data.slice(start, end));
+                const start = page * limit;
+                const end = start + limit;
 
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+                setProducts(res.data.slice(start, end));
 
-    fetchData();
-  }, [page]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  return (
-    <div className="women">
-      <h1>Kids's Collection</h1>
+        fetchData();
+    }, [page]);
 
-      <div className="grid">
-        {products.map((p) => {
+    return (
+        <div className="women">
+            <h1>Kids's Collection</h1>
 
-          const itemInCart = cart.find(item => item.id === p.id);
+            {loading ? (
+                <h2 className="loader" style={{ textAlign: "center" }}>Loading please wait...</h2>
+            ) : (
 
-          return (
-            <div className="card" key={p.id}>
-              <img src={p.image} alt={p.name} />
-              <h3>{p.name}</h3>
-              <p className="price">₹{p.price}</p>
 
-              <button onClick={() => handleAddToCart(p)}>
-                Add to Cart
-              </button>
+                <div className="grid">
+                    {products.map((p) => {
 
-              {itemInCart && (
-                <p style={{ marginTop: "8px", fontWeight: "bold" }}>
-                  Qty: {itemInCart.qty}
-                </p>
-              )}
+                        const itemInCart = cart.find(item => item.id === p.id);
+
+                        return (
+                            <div className="card" key={p.id}>
+                                <img src={p.image} alt={p.name} />
+                                <h3>{p.name}</h3>
+                                <p className="price">₹{p.price}</p>
+
+                                <button onClick={() => handleAddToCart(p)}>
+                                    Add to Cart
+                                </button>
+
+                                {itemInCart && (
+                                    <p style={{ marginTop: "8px", fontWeight: "bold" }}>
+                                        Qty: {itemInCart.qty}
+                                    </p>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+
+                <button
+                    onClick={() => setPage(prev => prev - 1)}
+                    disabled={page === 0}
+                    style={{ marginRight: "10px" }}
+                >
+                    ⬅ Prev
+                </button>
+
+                <span>Page {page + 1}</span>
+
+                <button
+                    onClick={() => setPage(prev => prev + 1)}
+                    style={{ marginLeft: "10px" }}
+                >
+                    Next ➡
+                </button>
+
             </div>
-          );
-        })}
-      </div>
 
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
-        
-        <button 
-          onClick={() => setPage(prev => prev - 1)}
-          disabled={page === 0}
-          style={{ marginRight: "10px" }}
-        >
-          ⬅ Prev
-        </button>
+        </div>
 
-        <span>Page {page + 1}</span>
-
-        <button 
-          onClick={() => setPage(prev => prev + 1)}
-          style={{ marginLeft: "10px" }}
-        >
-          Next ➡
-        </button>
-
-      </div>
-    </div>
-  );
+    );
 };
+
 
 export default KidsCollections;
