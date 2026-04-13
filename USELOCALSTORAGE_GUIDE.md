@@ -60,7 +60,7 @@ Page reload
 Hook reads from localStorage
     window.localStorage.getItem('cart')
   ↓
-Cart state = [{id: 1, qty: 1}] (RESTORED! 🎉)
+Cart state = [{id: 1, qty: 1}] (RESTORED! )
 ```
 
 ---

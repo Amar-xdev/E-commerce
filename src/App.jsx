@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 import Menscollection from './components/MensCollection';
 import PlaceOrder from './components/PlaceOrder';
 import Success from './components/Success';
+import KidsCollections from './components/KidsCollections';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
         <BrowserRouter>
           <Navbar />
 
-
+         
           <Routes>
             <Route path="/" element={<Hero />} />
 
@@ -29,12 +30,15 @@ function App() {
             <Route path="/login" element={<LoginSignup />} />
             <Route path="/women" element={<Womenscollection />} />
             <Route path="/men" element={<Menscollection />} />
+            <Route path="/kids" element={<KidsCollections />} />
 
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PlaceOrder />} />
             <Route path="/success" element={<Success />} />
+            
 
           </Routes>
+        
 
         </BrowserRouter>
 

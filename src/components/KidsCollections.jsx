@@ -1,9 +1,10 @@
+
 import { useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import "./Css/Women.css";
 import { CartContext } from "./CartContex";
 
-const Womenscollection = () => {
+const KidsCollections = () => {
 
   const { cart, addToCart: addToCartContext } = useContext(CartContext);
 
@@ -18,10 +19,20 @@ const Womenscollection = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://dummyjson.com/products?limit=${limit}&skip=${page * limit}`
-      );
-      setProducts(res.data.products);
+      try {
+        const res = await axios.get(
+          `https://69dcc95084f912a264042db9.mockapi.io/products`
+        );
+
+        
+        const start = page * limit;
+        const end = start + limit;
+
+        setProducts(res.data.slice(start, end));
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     fetchData();
@@ -29,7 +40,7 @@ const Womenscollection = () => {
 
   return (
     <div className="women">
-      <h1>Men's Collection</h1>
+      <h1>Kids's Collection</h1>
 
       <div className="grid">
         {products.map((p) => {
@@ -38,8 +49,8 @@ const Womenscollection = () => {
 
           return (
             <div className="card" key={p.id}>
-              <img src={p.thumbnail} alt={p.title} />
-              <h3>{p.title}</h3>
+              <img src={p.image} alt={p.name} />
+              <h3>{p.name}</h3>
               <p className="price">₹{p.price}</p>
 
               <button onClick={() => handleAddToCart(p)}>
@@ -56,7 +67,6 @@ const Womenscollection = () => {
         })}
       </div>
 
-      
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         
         <button 
@@ -81,4 +91,4 @@ const Womenscollection = () => {
   );
 };
 
-export default Womenscollection;
+export default KidsCollections;
