@@ -1,11 +1,12 @@
+
 import { useContext } from "react";
 import { CartContext } from "./CartContex";
 import { useNavigate } from "react-router-dom";
+import "./Css/Cart.css";
 
 const Cart = () => {
-
-  const { cart, removeFromCart } = useContext(CartContext);
-  const navigate = useNavigate(); 
+  const { cart, removeFromCart, increaseQty, decreaseQty } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const total = cart.reduce(
     (sum, item) => sum + item.price * item.qty,
@@ -13,65 +14,63 @@ const Cart = () => {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="cart-page">
       <h1>Your Cart</h1>
 
       {cart.length === 0 ? (
-        <p>Empty Cart 🛒</p>
+        <p className="empty">Empty Cart 🛒</p>
       ) : (
-        cart.map((item) => (
-          <div
-            key={item.id}
-            style={{
-              marginBottom: "10px",
-              border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "8px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          >
-            <div>
-              <h3>{item.title || item.name}</h3>
-              <p>₹{item.price}</p>
-              <p>Qty: {item.qty}</p>
-            </div>
+        <div className="cart-list">
+          {cart.map((item) => (
+            <div className="cart-item" key={item.id}>
+              
+              
+              <img
+                src={item.thumbnail || item.image}
+                alt={item.title || item.name}
+              />
 
-            <button
-              onClick={() => removeFromCart(item.id)}
-              style={{
-                background: "red",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "50%",
-                cursor: "pointer"
-              }}
-            >
-              ❌
-            </button>
-          </div>
-        ))
+             
+              <div className="cart-details">
+                <h3>{item.title || item.name}</h3>
+                <p>Price: ₹{item.price}</p>
+
+                
+                <div className="qty">
+                  <button onClick={() => decreaseQty(item.id)}>-</button>
+                  <span>{item.qty}</span>
+                  <button onClick={() => increaseQty(item.id)}>+</button>
+                </div>
+
+              
+                <p className="subtotal">
+                  Subtotal: ₹{item.price * item.qty}
+                </p>
+              </div>
+
+             
+              <button
+                className="remove"
+                onClick={() => removeFromCart(item.id)}
+              >
+                ❌
+              </button>
+            </div>
+          ))}
+        </div>
       )}
 
-      <h2>Total: ₹{total}</h2>
+      <div className="cart-summary">
+        <h2>Total: ₹{total}</h2>
 
-      
-      <button
-        onClick={() => navigate("/checkout")}
-        disabled={cart.length === 0}
-        style={{
-          background: cart.length === 0 ? "gray" : "#4CAF50",
-          cursor: cart.length === 0 ? "not-allowed" : "pointer",
-          padding: "10px 20px",
-          border: "none",
-          color: "white",
-          borderRadius: "5px"
-        }}
-      >
-        Purchase
-      </button>
+        <button
+          onClick={() => navigate("/checkout")}
+          disabled={cart.length === 0}
+          className="purchase"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
     </div>
   );
 };

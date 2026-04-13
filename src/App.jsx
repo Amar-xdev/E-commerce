@@ -10,6 +10,7 @@ import CartProvider from './components/CartContex';
 import Cart from './components/Cart';
 import Menscollection from './components/MensCollection';
 import PlaceOrder from './components/PlaceOrder';
+import Success from './components/Success';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PlaceOrder />} />
+            <Route path="/success" element={<Success />} />
 
           </Routes>
 

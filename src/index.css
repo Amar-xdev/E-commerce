@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #865858;
+  background-color:#059DBC;
   padding: 10px 5%;
   flex-wrap: wrap;
 }
@@ -57,8 +57,8 @@ button:active {
 .hero img {
   margin-top: 5px;
   width: 100%;          
-  max-width: 1200px;  
-  height: 500px;       
+  max-width: 1350px;  
+  height: 600px;       
   object-fit: cover;
 }
 
