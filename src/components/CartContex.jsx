@@ -47,7 +47,7 @@ const CartProvider = ({ children }) => {
     );
   };
 
-  // ✅ CLEAR CART (FIXED 🔥)
+
   const clearCart = () => {
     setCart([]);
   };
