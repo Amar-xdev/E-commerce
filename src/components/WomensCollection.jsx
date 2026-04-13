@@ -1,12 +1,16 @@
 
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import "./Css/Women.css";
 import { CartContext } from "./CartContex";
 
 const Womenscollection = () => {
 
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, addToCart: addToCartContext } = useContext(CartContext);
+  
+  const handleAddToCart = useCallback((product) => {
+    addToCartContext(product);
+  }, [addToCartContext]);
 
   const [products, setProducts] = useState([]);
 
@@ -35,7 +39,7 @@ const Womenscollection = () => {
               <h3>{p.title}</h3>
               <p className="price">₹{p.price}</p>
 
-              <button onClick={() => addToCart(p)}>
+              <button onClick={() => handleAddToCart(p)}>
                 Add to Cart
               </button>
 

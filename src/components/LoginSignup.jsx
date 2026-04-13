@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import "./Css/LoginSignup.css"
 
 const LoginSignup = () => {
@@ -14,6 +14,10 @@ const LoginSignup = () => {
   })
 
   const [errors, setErrors] = useState({})
+  
+  const nameInputRef = useRef(null)
+  const emailInputRef = useRef(null)
+  const passwordInputRef = useRef(null)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -53,6 +57,13 @@ const LoginSignup = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
+      if (validationErrors.name && nameInputRef.current) {
+        nameInputRef.current.focus()
+      } else if (validationErrors.email && emailInputRef.current) {
+        emailInputRef.current.focus()
+      } else if (validationErrors.password && passwordInputRef.current) {
+        passwordInputRef.current.focus()
+      }
     } else {
       setErrors({})
 
@@ -86,6 +97,7 @@ const LoginSignup = () => {
           {!isLogin && (
             <>
               <input 
+                ref={nameInputRef}
                 type='text'
                 name="name"
                 placeholder='Your Name'
@@ -97,6 +109,7 @@ const LoginSignup = () => {
           )}
 
           <input 
+            ref={emailInputRef}
             type='email' 
             name="email"
             placeholder='Email Address'
@@ -106,6 +119,7 @@ const LoginSignup = () => {
           {errors.email && <p className="error">{errors.email}</p>}
 
           <input
+            ref={passwordInputRef}
             type='password' 
             name="password"
             placeholder='Password'

@@ -1,5 +1,5 @@
 
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { CartContext } from "./CartContex";
 import { useNavigate } from "react-router-dom";
 import "./Css/Cart.css";
@@ -8,10 +8,12 @@ const Cart = () => {
   const { cart, removeFromCart, increaseQty, decreaseQty } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  const total = useMemo(() => {
+    return cart.reduce(
+      (sum, item) => sum + item.price * item.qty,
+      0
+    );
+  }, [cart]);
 
   return (
     <div className="cart-page">
