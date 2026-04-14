@@ -50,7 +50,6 @@ const Womenscollection = () => {
         <h2 className="loader" style={{ textAlign: "center" }}>Loading please wait...</h2>
       ) : (
 
-
         <div className="grid">
           {products.map((p) => {
 

@@ -12,6 +12,7 @@ import Menscollection from './components/MensCollection';
 import PlaceOrder from './components/PlaceOrder';
 import Success from './components/Success';
 import KidsCollections from './components/KidsCollections';
+import ExclusiveOffers from './components/ExclusiveOffers';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PlaceOrder />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/offers" element={<ExclusiveOffers />} />
             
 
           </Routes>
