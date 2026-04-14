@@ -15,6 +15,7 @@ const KidsCollections = () => {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false)
+    const [total, setTotal] = useState(0)
 
     const limit = 10;
 
@@ -31,6 +32,7 @@ const KidsCollections = () => {
                 const end = start + limit;
 
                 setProducts(res.data.slice(start, end));
+                setTotal(res.data.length)
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -41,6 +43,8 @@ const KidsCollections = () => {
 
         fetchData();
     }, [page]);
+
+    const maxPage = Math.ceil(total / limit);
 
     return (
         <div className="women">
@@ -76,13 +80,17 @@ const KidsCollections = () => {
                     })}
                 </div>
             )}
-
             <div style={{ marginTop: "20px", textAlign: "center" }}>
 
                 <button
                     onClick={() => setPage(prev => prev - 1)}
                     disabled={page === 0}
-                    style={{ marginRight: "10px" }}
+                    style={{
+                        marginRight: "10px",
+                        background: page === 0 ? "gray" : "#4CAF50",
+                        cursor: page === 0 ? "not-allowed" : "pointer"
+                    }}
+
                 >
                     ⬅ Prev
                 </button>
@@ -91,7 +99,14 @@ const KidsCollections = () => {
 
                 <button
                     onClick={() => setPage(prev => prev + 1)}
-                    style={{ marginLeft: "10px" }}
+
+                    disabled={page >= maxPage - 1}
+                    style={{
+                        marginLeft: "10px",
+                        background: page >= maxPage - 1 ? "gray" : "#4CAF50",
+                        cursor: page >= maxPage - 1 ? "not-allowed" : "pointer"
+                    }}
+
                 >
                     Next ➡
                 </button>

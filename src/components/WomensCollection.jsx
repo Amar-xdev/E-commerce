@@ -14,6 +14,7 @@ const Womenscollection = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false)
+  const [total, setTotal] = useState(0)
 
   const limit = 10;
 
@@ -26,6 +27,7 @@ const Womenscollection = () => {
           `https://dummyjson.com/products?limit=${limit}&skip=${page * limit}`
         );
         setProducts(res.data.products);
+        setTotal(res.data.total);
       }
 
       catch (error) {
@@ -37,6 +39,8 @@ const Womenscollection = () => {
 
     fetchData();
   }, [page]);
+
+  const maxPage = Math.ceil(total / limit);
 
   return (
     <div className="women">
@@ -51,6 +55,7 @@ const Womenscollection = () => {
           {products.map((p) => {
 
             const itemInCart = cart.find(item => item.id === p.id);
+
 
             return (
               <div className="card" key={p.id}>
@@ -71,14 +76,19 @@ const Womenscollection = () => {
             );
           })}
         </div>
-      )};
+      )}
 
       <div style={{ marginTop: "20px", textAlign: "center" }}>
 
         <button
           onClick={() => setPage(prev => prev - 1)}
           disabled={page === 0}
-          style={{ marginRight: "10px" }}
+          style={{
+            marginRight: "10px",
+            background: page === 0 ? "gray" : "#4CAF50",
+            cursor: page === 0 ? "not-allowed" : "pointer"
+          }}
+
         >
           ⬅ Prev
         </button>
@@ -87,7 +97,14 @@ const Womenscollection = () => {
 
         <button
           onClick={() => setPage(prev => prev + 1)}
-          style={{ marginLeft: "10px" }}
+
+          disabled={page >= maxPage - 1}
+          style={{
+            marginLeft: "10px",
+            background: page >= maxPage - 1 ? "gray" : "#4CAF50",
+            cursor: page >= maxPage - 1 ? "not-allowed" : "pointer"
+          }}
+
         >
           Next ➡
         </button>
