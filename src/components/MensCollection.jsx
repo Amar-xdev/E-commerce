@@ -17,6 +17,7 @@ const Menscollection = () => {
   const [total, setTotal] = useState(0)
 
   const limit = 10;
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ const Menscollection = () => {
 
             return (
               <div className="card" key={p.id}>
-                <img src={p.thumbnail} alt={p.title} />
+                <img src={p.thumbnail} alt={p.title}/>
                 <h3>{p.title}</h3>
                 <p className="price">₹{p.price}</p>
 

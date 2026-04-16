@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Offers = () => {
 
-  const navigate = useNavigate(); // ✅ navigation
+  const navigate = useNavigate();
 
   return (
     <div className='offers'>

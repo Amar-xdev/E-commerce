@@ -9,7 +9,7 @@ const PlaceOrder = () => {
   const { cart, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const [orderPlaced, setOrderPlaced] = useState(false); 
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -42,9 +42,9 @@ const PlaceOrder = () => {
       return;
     }
 
-    setOrderPlaced(true); 
+    setOrderPlaced(true);
     clearCart();          
-    navigate("/success"); 
+    navigate("/success");
   };
 
   return (

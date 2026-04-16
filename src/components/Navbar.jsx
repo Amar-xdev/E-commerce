@@ -1,71 +1,77 @@
 
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { CartContext } from './CartContex'
+import "./Css/Navbar.css"
 
 const Navbar = () => {
 
   const { cart } = useContext(CartContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  
   const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
 
   return (
-    <div className='nav'>
+    <>
+      
+      <div className="nav">
 
-      <img
-        src="https://plus.unsplash.com/premium_vector-1727544664530-aade313813c3"
-        height={50}
-        width={50}
-        alt="logo"
-      />
+        
+        <button className="menu-btn" onClick={() => setIsOpen(true)}>
+          ☰
+        </button>
 
-      <div className="nav-links">
-        <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
-          Home
-        </NavLink>
+        
+        <div className="logo">
+          <img
+            src="https://plus.unsplash.com/premium_vector-1727544664530-aade313813c3"
+            alt="logo"
+          />
+        </div>
 
-        <NavLink to="/men" className={({ isActive }) => isActive ? "active" : ""}>
-          Men
-        </NavLink>
+       
+        <div className="nav-links">
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/men">Men</NavLink>
+          <NavLink to="/women">Women</NavLink>
+          <NavLink to="/kids">Kids</NavLink>
+        </div>
 
-        <NavLink to="/women" className={({ isActive }) => isActive ? "active" : ""}>
-          Women
-        </NavLink>
+        
+        <div className="right-nav">
+          <NavLink to="/login">
+            <button className="signup-btn">Sign up</button>
+          </NavLink>
 
-        <NavLink to="/kids" className={({ isActive }) => isActive ? "active" : ""}>
-          Kids
-        </NavLink>
+          <NavLink to="/cart" className="cart-icon">
+            🛒
+            {totalItems > 0 && (
+              <span className="cart-count">{totalItems}</span>
+            )}
+          </NavLink>
+        </div>
       </div>
 
-      <NavLink to="/login">
-        <button>Sign up</button>
-      </NavLink>
+      
+      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+
+        <div className="sidebar-header">
+          <h3>Menu</h3>
+          <button onClick={() => setIsOpen(false)}>✖</button>
+        </div>
+
+        <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+        <NavLink to="/men" onClick={() => setIsOpen(false)}>Men</NavLink>
+        <NavLink to="/women" onClick={() => setIsOpen(false)}>Women</NavLink>
+        <NavLink to="/kids" onClick={() => setIsOpen(false)}>Kids</NavLink>
+
+      </div>
 
       
-      <NavLink 
-        to="/cart" 
-        className={({ isActive }) => isActive ? "active" : ""}
-        style={{ position: "relative", marginLeft: "20px" }}
-      >
-         <img src="https://images.unsplash.com/photo-1638428355339-3ae4ae63bf4e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-        {totalItems > 0 && (
-          <span style={{
-            position: "absolute",
-            top: "-8px",
-            right: "-12px",
-            background: "red",
-            color: "white",
-            borderRadius: "50%",
-            padding: "2px 7px",
-            fontSize: "12px"
-          }}>
-            {totalItems}
-          </span>
-        )}
-      </NavLink>
-
-    </div>
+      {isOpen && (
+        <div className="backdrop" onClick={() => setIsOpen(false)}></div>
+      )}
+    </>
   )
 }
 
