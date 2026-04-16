@@ -14,7 +14,7 @@ const LoginSignup = () => {
   })
 
   const [errors, setErrors] = useState({})
-  
+
   const nameInputRef = useRef(null)
   const emailInputRef = useRef(null)
   const passwordInputRef = useRef(null)
@@ -35,12 +35,18 @@ const LoginSignup = () => {
       newErrors.name = "Name is required"
     }
 
-    if (!formData.email.includes("@")) {
-      newErrors.email = "Valid email required"
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
     }
 
-    if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Password must be 8+ chars, include uppercase, lowercase, number & special char";
     }
 
     if (!isLogin && !formData.agree) {
@@ -71,6 +77,9 @@ const LoginSignup = () => {
         alert("Login Successful ")
       } else {
         alert("Signup Successful ")
+        
+        setIsLogin(true);
+        setErrors({});
       }
 
       console.log(formData)
@@ -88,15 +97,15 @@ const LoginSignup = () => {
     <div className='loginsignup'>
       <div className="loginsignup-container">
 
-       
+
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
 
         <form onSubmit={handleSubmit} className='loginsignup-fields'>
 
-         
+
           {!isLogin && (
             <>
-              <input 
+              <input
                 ref={nameInputRef}
                 type='text'
                 name="name"
@@ -108,9 +117,9 @@ const LoginSignup = () => {
             </>
           )}
 
-          <input 
+          <input
             ref={emailInputRef}
-            type='email' 
+            type='email'
             name="email"
             placeholder='Email Address'
             value={formData.email}
@@ -120,7 +129,7 @@ const LoginSignup = () => {
 
           <input
             ref={passwordInputRef}
-            type='password' 
+            type='password'
             name="password"
             placeholder='Password'
             value={formData.password}
@@ -134,7 +143,17 @@ const LoginSignup = () => {
 
           <p className="loginsignup-login">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-            <span onClick={() => setIsLogin(!isLogin)}>
+           
+            <span onClick={() => {
+              setIsLogin(!isLogin);
+              setErrors({});
+              setFormData({
+                name: "",
+                email: "",
+                password: "",
+                agree: false
+              });
+            }}>
               {isLogin ? "Sign Up" : "Login here"}
             </span>
           </p>
@@ -142,7 +161,7 @@ const LoginSignup = () => {
           {!isLogin && (
             <>
               <div className='loginsignup-agree'>
-                <input 
+                <input
                   type='checkbox'
                   name="agree"
                   checked={formData.agree}

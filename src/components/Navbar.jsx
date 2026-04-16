@@ -27,7 +27,7 @@ const Navbar = () => {
 
         <div className="nav-links">
           <div className="sidebar-header">
-            <h3>Menu</h3>
+            
             <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
           </div>
           <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
